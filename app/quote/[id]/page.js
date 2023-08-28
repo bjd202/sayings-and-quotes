@@ -1,15 +1,34 @@
 'use client'
 
 import { useParams, useRouter } from "next/navigation";
-import SayingsAndQuotesData from '../../../sayings-and-quotes'
+import { useState, useEffect } from "react";
 
-const data = SayingsAndQuotesData;
 
 export default function QuotesDetail(){
     const params = useParams()
     const router = useRouter()
     const { id } = params
-    const filteredData = data[parseInt(id)-1]
+    
+    const [data, setData] = useState({})
+
+    useEffect(() => {
+      const fetchData = async () => {
+        const res = await fetch(`http://localhost:3001/quotes/${id}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json"
+          }
+        })
+      
+        const fetchData = await res.json();
+        console.log(fetchData);
+
+        setData(fetchData);
+      }
+
+      fetchData();
+    }, [])
+    
 
     const handleList = () => {
         router.push('/')
@@ -21,15 +40,15 @@ export default function QuotesDetail(){
                 <tbody>
                     <tr>
                         <th>번호</th>
-                        <td>{filteredData.id}</td>
+                        <td>{data.id}</td>
                     </tr>
                     <tr>
                         <th>분류</th>
-                        <td>{filteredData.category}</td>
+                        <td>{data.category}</td>
                     </tr>
                     <tr>
                         <th>내용</th>
-                        <td>{filteredData.content}</td>
+                        <td>{data.content}</td>
                     </tr>
                 </tbody>
             </table>

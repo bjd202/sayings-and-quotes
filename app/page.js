@@ -1,18 +1,15 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import SayingsAndQuotesData from '../sayings-and-quotes'
 import { useRouter } from 'next/navigation'
-
-const data = SayingsAndQuotesData
 
 export default function Home() {
 
   const router = useRouter()
 
+  const [data, setData] = useState([])
   const [randomText, setRandomText] = useState("")
-  // const [data, setData] = useState(SayingsAndQuotesData)
-  const [filteredData, setFilteredData] = useState(data)
+  const [filteredData, setFilteredData] = useState([])
   const [category, setCategory] = useState([])
 
   // 검색 관련
@@ -29,15 +26,30 @@ export default function Home() {
 
 
   useEffect(() => {
-    console.log(data);
-    const random = Math.floor(Math.random() * (data.length-1));
-    console.log(random);
-    setRandomText(data[random].content);
+    const fetchData = async () => {
+      const res = await fetch("http://localhost:3001/quotes", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      
+      const fetchData = await res.json();
+      setData(fetchData);
+      setFilteredData(fetchData);
 
-    const categories = data.map(s => s.category);
-    const uniqueCategorries = [...new Set(categories)];
-    // console.log(uniqueCategorries);
-    setCategory(uniqueCategorries);
+      const random = Math.floor(Math.random() * (fetchData.length-1));
+      console.log(random);
+      setRandomText(fetchData[random].content);
+  
+      const categories = fetchData.map(s => s.category);
+      const uniqueCategorries = [...new Set(categories)];
+      // console.log(uniqueCategorries);
+      setCategory(uniqueCategorries);
+    }
+
+    fetchData();
+
   }, [])
 
   const handleSearchText = () => {
