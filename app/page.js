@@ -2,10 +2,13 @@
 
 import { useEffect, useState } from 'react'
 import SayingsAndQuotesData from '../sayings-and-quotes'
+import { useRouter } from 'next/navigation'
 
 const data = SayingsAndQuotesData
 
 export default function Home() {
+
+  const router = useRouter()
 
   const [randomText, setRandomText] = useState("")
   // const [data, setData] = useState(SayingsAndQuotesData)
@@ -65,6 +68,10 @@ export default function Home() {
     setCurrentPage(newPage);
   };
 
+  const handleTr = (id) => {
+    router.push(`/quote/${id}`);
+  }
+
   return (
     <div>
 
@@ -112,7 +119,7 @@ export default function Home() {
               currentItems.length > 0 ?
               currentItems.map(s => {
                 return(
-                  <tr key={s.id}>
+                  <tr key={s.id} onClick={() => handleTr(s.id)} style={{cursor: 'pointer'}}>
                     <td>{s.id}</td>
                     <td>{s.category}</td>
                     <td>{s.content}</td>
