@@ -84,6 +84,10 @@ export default function Home() {
     router.push(`/quote/${id}`);
   }
 
+  const handleCreateRequest = () => {
+    router.push("/create-request");
+  }
+
   return (
     <div>
 
@@ -115,6 +119,7 @@ export default function Home() {
           onChange={e => setSearchText(e.target.value)} 
         />
         <button onClick={handleSearchText}>검색</button>
+        <button onClick={handleCreateRequest}>등록 요청</button>
       </div>
 
       <div>
