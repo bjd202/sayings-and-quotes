@@ -1,7 +1,8 @@
 'use client'
 
 import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { useAuth } from "../AuthContext"
 
 export default function CreateRequest (){
     const router = useRouter()
@@ -9,6 +10,14 @@ export default function CreateRequest (){
     const [category, setCategory] = useState("")
     const [content, setContent] = useState("")
 
+    const { loggedIn } = useAuth()
+
+    useEffect(() => {
+      console.log(loggedIn);
+      if(!loggedIn){
+        router.push("/login");
+      }
+    }, [])
 
     const handleList = () => {
         router.push('/')

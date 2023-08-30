@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useAuth } from './AuthContext'
 
 export default function Home() {
 
@@ -24,6 +25,15 @@ export default function Home() {
   const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
   const totalPages = Math.ceil(filteredData.length / itemsPerPage); // 전체 페이지
 
+  const { loggedIn, logout } = useAuth()
+
+  useEffect(() => {
+    console.log(loggedIn);
+    if(!loggedIn){
+      router.push("/login");
+    }
+  }, [])
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -88,8 +98,17 @@ export default function Home() {
     router.push("/create-request");
   }
 
+  const handleLogout = () => {
+    logout();
+    router.push("/login");
+  }
+
   return (
     <div>
+
+      <div>
+        <button onClick={handleLogout}>로그아웃</button>
+      </div>
 
       <div>
         <h1>명언 및 인용구 컬렉션</h1>

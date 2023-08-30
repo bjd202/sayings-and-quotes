@@ -1,5 +1,6 @@
 'use client'
 
+import { useAuth } from "@/app/AuthContext";
 import { useParams, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
@@ -16,6 +17,15 @@ export default function QuotesDetail(){
     const [category, setCategory] = useState("")
     const [content, setContent] = useState("")
     const [description, setDescription] = useState("")
+
+    const { loggedIn } = useAuth()
+
+    useEffect(() => {
+      console.log(loggedIn);
+      if(!loggedIn){
+        router.push("/login");
+      }
+    }, [])
 
     useEffect(() => {
       const fetchData = async () => {
