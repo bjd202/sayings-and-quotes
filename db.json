@@ -1,9 +1,9 @@
 {
   "users": [
     {
-      "id": 1,
       "username": "admin",
-      "password": "1234"
+      "password": "$2a$10$pEoUsMSMzay.V7iGyAMCgOsfxsTzDkTXhLUcmpNNK3zOt0ZAYHAiC",
+      "id": 1
     }
   ],
   "create-request": [
@@ -11,6 +11,12 @@
       "category": "명언",
       "content": "삶이 있는 한 희망은 있다",
       "id": 1
+    },
+    {
+      "category": "사자성어",
+      "content": "일석이조",
+      "username": "admin",
+      "id": 2
     }
   ],
   "update-request": [

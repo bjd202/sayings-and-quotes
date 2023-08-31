@@ -63,7 +63,8 @@ export default function QuotesDetail(){
           "quotes-id": data.id,
           "category": category,
           "content": content,
-          "description": description
+          "description": description,
+          "username": localStorage.getItem("username")
         })
       })
       .then(res => res.json())

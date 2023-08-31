@@ -100,7 +100,12 @@ export default function Home() {
 
   const handleLogout = () => {
     logout();
+    localStorage.clear();
     router.push("/login");
+  }
+
+  const handleAdminPage = () => {
+    router.push("/admin");
   }
 
   return (
@@ -108,6 +113,11 @@ export default function Home() {
 
       <div>
         <button onClick={handleLogout}>로그아웃</button>
+        {
+          localStorage.getItem("username") === "admin" ? 
+          (<button onClick={handleAdminPage}>관리자 페이지</button>)
+          : null
+        }
       </div>
 
       <div>

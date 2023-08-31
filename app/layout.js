@@ -5,9 +5,7 @@ export const metadata = {
   description: 'Sayings and Quotes',
 }
 
-export default function RootLayout({ children, pageProps }) {
-  console.log("pageProps", pageProps)
-  
+export default function RootLayout({ children }) {
   return ( 
       <html>
         <AuthProvider>

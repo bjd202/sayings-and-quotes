@@ -31,13 +31,15 @@ export default function CreateRequest (){
             },
             body: JSON.stringify({
                 category,
-                content
+                content,
+                "username": localStorage.getItem("username")
             })
         })
         .then(res => res.json())
         .then(data => {
             console.log(data);
             alert("등록 요청이 정상적으로 처리되었습니다.");
+            router.push("/");
         })
         .catch(err => console.log(err))
     }
