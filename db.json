@@ -6,40 +6,13 @@
       "id": 1
     }
   ],
-  "create-request": [
-    {
-      "category": "명언",
-      "content": "삶이 있는 한 희망은 있다",
-      "id": 1
-    },
-    {
-      "category": "사자성어",
-      "content": "일석이조",
-      "username": "admin",
-      "id": 2
-    }
-  ],
-  "update-request": [
-    {
-      "quotes-id": 1,
-      "category": "속담",
-      "content": "가는 말이 고와야 오는 말이 곱다.",
-      "description": "분류가 잘못되었음.",
-      "id": 1
-    },
-    {
-      "quotes-id": 1,
-      "category": "사자성어",
-      "content": "가는 말이 고와야 오는 말이 곱다.",
-      "description": "분류가 잘못되었음.",
-      "id": 2
-    }
-  ],
+  "create-request": [],
+  "update-request": [],
   "quotes": [
     {
-      "id": 1,
-      "content": "가는 말이 고와야 오는 말이 곱다.",
-      "category": "사자성어"
+      "category": "속담",
+      "content": "가는 말이 고와야 오는 말이 곱지.",
+      "id": 1
     },
     {
       "id": 2,
@@ -135,6 +108,31 @@
       "id": 20,
       "content": "자라보고 자란 뒤에 보아라.",
       "category": "사자성어"
+    },
+    {
+      "category": "명언",
+      "content": "삶이 있는 한 희망은 있다",
+      "id": 21
+    },
+    {
+      "category": "사자성어",
+      "content": "일석이조",
+      "id": 22
+    },
+    {
+      "category": "미사여구",
+      "content": "ㅁㄴㅇㄻㄴㅇㄹ",
+      "id": 23
+    },
+    {
+      "category": "fas",
+      "content": "asdf",
+      "id": 24
+    },
+    {
+      "category": "aa",
+      "content": "bb",
+      "id": 25
     }
   ]
 }
