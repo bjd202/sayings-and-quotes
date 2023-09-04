@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from './AuthContext'
+import { Button, Col, Container, Form, Pagination, Row, Table } from 'react-bootstrap'
 
 export default function Home() {
 
@@ -109,86 +110,228 @@ export default function Home() {
   }
 
   return (
-    <div>
-
-      <div>
-        <button onClick={handleLogout}>로그아웃</button>
-        {
-          localStorage.getItem("username") === "admin" ? 
-          (<button onClick={handleAdminPage}>관리자 페이지</button>)
-          : null
-        }
-      </div>
-
-      <div>
-        <h1>명언 및 인용구 컬렉션</h1>
-      </div>
-
-      <div>
-        <h3>{randomText}</h3>
-        <button onClick={changeRandomText}>다른 명언 보기</button>
-      </div>
-
-      <div>
-        <select onChange={e => setCurrentCategory(e.target.value)}>
-          <option value="">전체</option>
-          <option value="내용">내용</option>
-          {
-            category.map(c => {
-              return(
-                <option key={c} value={c}>{c}</option>
-              )
-            })
-          }
-        </select>
-        <input 
-          type="text" 
-          placeholder="검색" 
-          value={searchText} 
-          onChange={e => setSearchText(e.target.value)} 
-        />
-        <button onClick={handleSearchText}>검색</button>
-        <button onClick={handleCreateRequest}>등록 요청</button>
-      </div>
-
-      <div>
-        <table>
-          <thead>
-            <tr>
-              <td>번호</td>
-              <td>분류</td>
-              <td>내용</td>
-            </tr>
-          </thead>
-          <tbody>
+    <Container fluid>
+      <Row style={{marginTop: 20}}>
+        <Row>
+          <Col sm={10}></Col>
+          <Col>
+            <Button
+              variant="outline-primary" 
+              size="sm"
+              onClick={handleLogout}
+            >
+              로그아웃
+            </Button>{' '}
             {
-              currentItems.length > 0 ?
-              currentItems.map(s => {
-                return(
-                  <tr key={s.id} onClick={() => handleTr(s.id)} style={{cursor: 'pointer'}}>
-                    <td>{s.id}</td>
-                    <td>{s.category}</td>
-                    <td>{s.content}</td>
-                  </tr>
-                )
-              }) : <tr>
-                <td colSpan={3}>데이터가 없습니다.</td>
-              </tr>
+              localStorage.getItem("username") === "admin" ? 
+              (
+                <Button 
+                  variant="outline-primary" 
+                  size="sm" 
+                  onClick={handleAdminPage}>관리자 페이지</Button>
+              )
+              : null
             }
-          </tbody>
-        </table>
+          </Col>
+        </Row>
+
+        <Row style={{marginTop: 20}}>
+          <Col sm={4}></Col>
+          <Col style={{textAlign: 'center'}}>
+            <h1>명언 및 인용구 컬렉션</h1>
+          </Col>
+          <Col></Col>
+        </Row>
+
+        <Row style={{marginTop: 20}}>
+          <Col sm={2}></Col>
+          <Col style={{textAlign: 'center'}}>
+            <Row>
+              <h3>{randomText}</h3>
+            </Row>
+          </Col>
+
+          <Col sm={2}>
+            
+          </Col>
+        </Row>
+
+        <Row>
+          <Col style={{textAlign: 'center'}}>
+            <Button 
+              variant='outline-primary'
+              size="sm"
+              onClick={changeRandomText}
+            >다른 명언 보기</Button>
+          </Col>
+        </Row>
+
+        <Row style={{marginTop: 40}}>
+          <Col sm={2}>
+            <Form.Select onChange={e => setCurrentCategory(e.target.value)}>
+              <option value="">전체</option>
+              <option value="내용">내용</option>
+              {
+                category.map(c => {
+                  return(
+                    <option key={c} value={c}>{c}</option>
+                  )
+                })
+              }
+            </Form.Select>
+          </Col>
+          <Col sm={3}>
+              <Form.Control 
+                type='text'
+                placeholder="검색" 
+                value={searchText} 
+                onChange={e => setSearchText(e.target.value)} 
+              />
+          </Col>
+          <Col>
+            <Button 
+              variant='outline-primary'
+              // size='sm'
+              onClick={handleSearchText}
+            >검색</Button> {' '}
+            <Button 
+              variant='outline-primary'
+              // size='sm'
+              onClick={handleCreateRequest}
+            >등록 요청</Button>
+          </Col>
+        </Row>
+
+        <Row style={{marginTop: 20, height: 370}}>
+          <Col>
+            <Table striped bordered hover size="sm">
+              <thead>
+                <tr style={{textAlign: 'center'}}>
+                  <td>번호</td>
+                  <td>분류</td>
+                  <td>내용</td>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  currentItems.length > 0 ?
+                  currentItems.map(s => {
+                    return(
+                      <tr key={s.id} onClick={() => handleTr(s.id)} style={{cursor: 'pointer'}}>
+                        <td width={100} style={{textAlign: 'center'}}>{s.id}</td>
+                        <td width={200} style={{textAlign: 'center'}}>{s.category}</td>
+                        <td>{s.content}</td>
+                      </tr>
+                    )
+                  }) : <tr>
+                    <td colSpan={3}>데이터가 없습니다.</td>
+                  </tr>
+                }
+              </tbody>
+            </Table>
+          </Col>
+        </Row>
+
+        <Row>
+          <Col sm={4}></Col>
+          <Col style={{display: 'flex', justifyContent: 'center'}}>
+            <Pagination>
+              <Pagination.First onClick={() => handlePageChange(1)} />
+              {
+                Array.from({ length: totalPages }).map((_, index) => (
+                  <Pagination.Item key={index} active={currentPage === index+1} onClick={() => handlePageChange(index + 1)}>
+                    {index + 1}
+                  </Pagination.Item>
+                ))
+              }
+              <Pagination.Last onClick={() => handlePageChange(totalPages)} />
+            </Pagination>
+          </Col>
+          <Col></Col>
+        </Row>
+      </Row>
+
+      {/* <div>
 
         <div>
+          <button onClick={handleLogout}>로그아웃</button>
           {
-            Array.from({ length: totalPages }).map((_, index) => (
-              <button key={index} onClick={() => handlePageChange(index + 1)}>
-                {index + 1}
-              </button>
-            ))
+            localStorage.getItem("username") === "admin" ? 
+            (<button onClick={handleAdminPage}>관리자 페이지</button>)
+            : null
           }
         </div>
-      </div>
 
-    </div>
+        <div>
+          <h1>명언 및 인용구 컬렉션</h1>
+        </div>
+
+        <div>
+          <h3>{randomText}</h3>
+          <button onClick={changeRandomText}>다른 명언 보기</button>
+        </div>
+
+        <div>
+          <select onChange={e => setCurrentCategory(e.target.value)}>
+            <option value="">전체</option>
+            <option value="내용">내용</option>
+            {
+              category.map(c => {
+                return(
+                  <option key={c} value={c}>{c}</option>
+                )
+              })
+            }
+          </select>
+          <input 
+            type="text" 
+            placeholder="검색" 
+            value={searchText} 
+            onChange={e => setSearchText(e.target.value)} 
+          />
+          <button onClick={handleSearchText}>검색</button>
+          <button onClick={handleCreateRequest}>등록 요청</button>
+        </div>
+
+        <div>
+          <table>
+            <thead>
+              <tr>
+                <td>번호</td>
+                <td>분류</td>
+                <td>내용</td>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                currentItems.length > 0 ?
+                currentItems.map(s => {
+                  return(
+                    <tr key={s.id} onClick={() => handleTr(s.id)} style={{cursor: 'pointer'}}>
+                      <td>{s.id}</td>
+                      <td>{s.category}</td>
+                      <td>{s.content}</td>
+                    </tr>
+                  )
+                }) : <tr>
+                  <td colSpan={3}>데이터가 없습니다.</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+
+          <div>
+            {
+              Array.from({ length: totalPages }).map((_, index) => (
+                <button key={index} onClick={() => handlePageChange(index + 1)}>
+                  {index + 1}
+                </button>
+              ))
+            }
+          </div>
+        </div>
+
+      </div> */}
+    </Container>
   )
 }

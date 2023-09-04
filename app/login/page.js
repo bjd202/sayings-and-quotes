@@ -4,6 +4,7 @@ import { useState } from "react"
 import { useAuth } from "../AuthContext"
 import { useRouter } from "next/navigation"
 import bcrypt from 'bcryptjs'
+import { Button, Col, Container, Form, Row } from "react-bootstrap"
 
 export default function Login(){
 
@@ -77,36 +78,52 @@ export default function Login(){
     }
 
     return(
-        <div>
-            <table>
-                <tbody>
-                    <tr>
-                        <th>아이디</th>
-                        <td>
-                            <input
-                                type="text"
-                                value={username}
-                                onChange={e => setUsername(e.target.value)}
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>비밀번호</th>
-                        <td>
-                        <input
-                            type="password"
-                            value={password}
-                            onChange={e => setPassword(e.target.value)}
-                        />
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <Container fluid>
+            <Row style={{marginTop: 200}}>
+                <Col></Col>
+                <Col>
+                    <Form>
+                        <Form.Group as={Row} className="mb-3">
+                            <Form.Label column sm={3} className="text-purple">아이디</Form.Label>
+                            <Col sm={9}>
+                                <Form.Control 
+                                    type="text" 
+                                    value={username}
+                                    onChange={e => setUsername(e.target.value)}
+                                />
+                            </Col>
+                        </Form.Group>
 
-            <div>
-                <button onClick={handleLogin}>로그인</button>
-                <button onClick={handleCreateUser}>계정 생성</button>
-            </div>
-        </div>
+                        <Form.Group as={Row} className="mb-3">
+                            <Form.Label column sm={3}>비밀번호</Form.Label>
+                            <Col sm={9}>
+                                <Form.Control 
+                                    type="password" 
+                                    value={password}
+                                    onChange={e => setPassword(e.target.value)}
+                                />
+                            </Col>
+                        </Form.Group>
+
+                        <Form.Group as={Row} className="mb-3">
+                            <Col sm={{ span: 10, offset: 3 }}>
+                                <Button 
+                                    variant="outline-primary" 
+                                    size="sm"
+                                    onClick={handleLogin}
+                                >로그인</Button>
+                                {' '}
+                                <Button 
+                                    variant="outline-primary" 
+                                    size="sm"
+                                    onClick={handleCreateUser}
+                                >계정 생성</Button>
+                            </Col>
+                        </Form.Group>
+                    </Form>
+                </Col>
+                <Col></Col>
+            </Row>
+        </Container>
     )
 }
