@@ -10,8 +10,8 @@
   "update-request": [],
   "quotes": [
     {
-      "category": "속담",
-      "content": "가는 말이 고와야 오는 말이 곱지.",
+      "category": "속담g",
+      "content": "가는 말이 고와야 오는 말이 곱지.g",
       "id": 1
     },
     {
@@ -133,6 +133,11 @@
       "category": "aa",
       "content": "bb",
       "id": 25
+    },
+    {
+      "category": "새로운 등록",
+      "content": "새로운 등록",
+      "id": 26
     }
   ]
 }

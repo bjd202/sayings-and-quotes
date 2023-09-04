@@ -113,7 +113,7 @@ export default function Home() {
     <Container fluid>
       <Row style={{marginTop: 20}}>
         <Row>
-          <Col sm={10}></Col>
+          <Col sm={9}></Col>
           <Col>
             <Button
               variant="outline-primary" 

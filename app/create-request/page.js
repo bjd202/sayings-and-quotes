@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useAuth } from "../AuthContext"
+import { Button, Col, Container, Form, Row, Table } from "react-bootstrap"
 
 export default function CreateRequest (){
     const router = useRouter()
@@ -45,40 +46,52 @@ export default function CreateRequest (){
     }
 
     return(
-        <div>
-            <div>
-                <table>
-                    <tbody>
-                        <tr>
-                            <th>분류</th>
-                            <td>
-                                <input
-                                    type="text"
-                                    value={category}
-                                    onChange={e => setCategory(e.target.value)}
-                                    style={{width: 300}}
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>내용</th>
-                            <td>
-                                <input
-                                    type="text"
-                                    value={content}
-                                    onChange={e => setContent(e.target.value)}
-                                    style={{width: 300}}
-                                />
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div>
-                <button onClick={handleCreateRequest}>등록 요청</button>
-                <button onClick={handleList}>목록</button>
-            </div>
-        </div>
+        <Container fluid>
+            <Row style={{marginTop: 200}}>
+                <Col sm={2}></Col>
+                <Col>
+                    <Table>
+                        <tbody>
+                            <tr>
+                                <th>분류</th>
+                                <td>
+                                    <Form.Control
+                                        type="text"
+                                        value={category}
+                                        onChange={e => setCategory(e.target.value)}
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>내용</th>
+                                <td>
+                                    <Form.Control
+                                        type="text"
+                                        value={content}
+                                        onChange={e => setContent(e.target.value)}
+                                    />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </Table>
+                </Col>
+                <Col sm={2}></Col>
+            </Row>
+            
+            <Row>
+                <Col sm={2}></Col>
+                <Col>
+                    <Button
+                        variant="outline-primary"
+                        onClick={handleCreateRequest}
+                    >등록 요청</Button>{' '}
+                    <Button
+                        variant="outline-primary"
+                        onClick={handleList}
+                    >목록</Button>
+                </Col>
+                <Col sm={2}></Col>
+            </Row>
+        </Container>
     )
 }
