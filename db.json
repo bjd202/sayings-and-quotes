@@ -10,14 +10,14 @@
   "update-request": [],
   "quotes": [
     {
-      "category": "속담g",
-      "content": "가는 말이 고와야 오는 말이 곱지.g",
+      "category": "한국어 속담ㅂㅂㅂ",
+      "content": "그림의 떡.ㅂㅂㅂ",
       "id": 1
     },
     {
-      "id": 2,
-      "content": "그림의 떡.",
-      "category": "한국어 속담"
+      "category": "한국어 속담ㄷ",
+      "content": "그림의 떡.ㄷ",
+      "id": 2
     },
     {
       "id": 3,
@@ -138,6 +138,11 @@
       "category": "새로운 등록",
       "content": "새로운 등록",
       "id": 26
+    },
+    {
+      "category": "eqwe",
+      "content": "ewq",
+      "id": 27
     }
   ]
 }

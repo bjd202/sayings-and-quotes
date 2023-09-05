@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from './AuthContext'
 import { Button, Col, Container, Form, Pagination, Row, Table } from 'react-bootstrap'
+import Paging from './components/Paging'
 
 export default function Home() {
 
@@ -113,8 +114,7 @@ export default function Home() {
     <Container fluid>
       <Row style={{marginTop: 20}}>
         <Row>
-          <Col sm={9}></Col>
-          <Col>
+          <Col style={{textAlign: 'right'}}>
             <Button
               variant="outline-primary" 
               size="sm"
@@ -235,103 +235,15 @@ export default function Home() {
         <Row>
           <Col sm={4}></Col>
           <Col style={{display: 'flex', justifyContent: 'center'}}>
-            <Pagination>
-              <Pagination.First onClick={() => handlePageChange(1)} />
-              {
-                Array.from({ length: totalPages }).map((_, index) => (
-                  <Pagination.Item key={index} active={currentPage === index+1} onClick={() => handlePageChange(index + 1)}>
-                    {index + 1}
-                  </Pagination.Item>
-                ))
-              }
-              <Pagination.Last onClick={() => handlePageChange(totalPages)} />
-            </Pagination>
+            <Paging
+              totalPages={totalPages}
+              currentPage={currentPage}
+              onPageChange={handlePageChange}
+            />
           </Col>
           <Col></Col>
         </Row>
       </Row>
-
-      {/* <div>
-
-        <div>
-          <button onClick={handleLogout}>로그아웃</button>
-          {
-            localStorage.getItem("username") === "admin" ? 
-            (<button onClick={handleAdminPage}>관리자 페이지</button>)
-            : null
-          }
-        </div>
-
-        <div>
-          <h1>명언 및 인용구 컬렉션</h1>
-        </div>
-
-        <div>
-          <h3>{randomText}</h3>
-          <button onClick={changeRandomText}>다른 명언 보기</button>
-        </div>
-
-        <div>
-          <select onChange={e => setCurrentCategory(e.target.value)}>
-            <option value="">전체</option>
-            <option value="내용">내용</option>
-            {
-              category.map(c => {
-                return(
-                  <option key={c} value={c}>{c}</option>
-                )
-              })
-            }
-          </select>
-          <input 
-            type="text" 
-            placeholder="검색" 
-            value={searchText} 
-            onChange={e => setSearchText(e.target.value)} 
-          />
-          <button onClick={handleSearchText}>검색</button>
-          <button onClick={handleCreateRequest}>등록 요청</button>
-        </div>
-
-        <div>
-          <table>
-            <thead>
-              <tr>
-                <td>번호</td>
-                <td>분류</td>
-                <td>내용</td>
-              </tr>
-            </thead>
-            <tbody>
-              {
-                currentItems.length > 0 ?
-                currentItems.map(s => {
-                  return(
-                    <tr key={s.id} onClick={() => handleTr(s.id)} style={{cursor: 'pointer'}}>
-                      <td>{s.id}</td>
-                      <td>{s.category}</td>
-                      <td>{s.content}</td>
-                    </tr>
-                  )
-                }) : <tr>
-                  <td colSpan={3}>데이터가 없습니다.</td>
-                </tr>
-              }
-            </tbody>
-          </table>
-
-          <div>
-            {
-              Array.from({ length: totalPages }).map((_, index) => (
-                <button key={index} onClick={() => handlePageChange(index + 1)}>
-                  {index + 1}
-                </button>
-              ))
-            }
-          </div>
-        </div>
-
-      </div> */}
     </Container>
   )
 }

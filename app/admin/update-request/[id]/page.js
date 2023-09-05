@@ -3,6 +3,7 @@
 import { useAuth } from "@/app/AuthContext"
 import { useParams, useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
+import { Button, Col, Container, Row, Table } from "react-bootstrap"
 
 export default function UpdateRequestDetail(){
     const params = useParams()
@@ -13,6 +14,7 @@ export default function UpdateRequestDetail(){
     const [category, setCategory] = useState("")
     const [content, setContent] = useState("")
     const [description, setDescription] = useState("")
+    const [quotesId, setQuotesId] = useState(0)
 
     const loggedIn = useAuth()
 
@@ -36,6 +38,7 @@ export default function UpdateRequestDetail(){
           setCategory(fetchData.category);
           setContent(fetchData.content);
           setDescription(fetchData.description);
+          setQuotesId(fetchData["quotes-id"]);
         }
   
         fetchData();
@@ -44,7 +47,7 @@ export default function UpdateRequestDetail(){
     const handleUpdate = () => {
         if(confirm("수정하시겠습니까?")){
             const fetchData = async () => {
-                const patch = await fetch(`http://localhost:3001/quotes/${id}`, {
+                const patch = await fetch(`http://localhost:3001/quotes/${quotesId}`, {
                     method: "put",
                     headers: {
                         "Content-Type": "application/json",
@@ -76,28 +79,46 @@ export default function UpdateRequestDetail(){
     }
 
     return(
-        <div>
-            <table>
-                <tbody>
-                    <tr>
-                        <th>분류</th>
-                        <td>{category}</td>
-                    </tr>
-                    <tr>
-                        <th>내용</th>
-                        <td>{content}</td>
-                    </tr>
-                    <tr>
-                        <th>수정 요청 사유</th>
-                        <td>{description}</td>
-                    </tr>
-                </tbody>
-            </table>
+        <Container fluid>
+            <Row style={{marginTop: 200}}>
+                <Col sm={2}></Col>
+                <Col>
+                    <Table>
+                        <tbody>
+                            <tr>
+                                <th>분류</th>
+                                <td>{category}</td>
+                            </tr>
+                            <tr>
+                                <th>내용</th>
+                                <td>{content}</td>
+                            </tr>
+                            <tr>
+                                <th>수정 요청 사유</th>
+                                <td>{description}</td>
+                            </tr>
+                        </tbody>
+                    </Table>
+                </Col>
+                <Col sm={2}></Col>
+            </Row>
 
-            <div>
-                <button onClick={handleUpdate}>수정</button>
-                <button onClick={() => router.push("/admin")}>목록</button>
-            </div>
-        </div>
+            <Row>
+                <Col sm={2}></Col>
+                <Col>
+                    <Button
+                        variant="outline-primary"
+                        size="sm"
+                        onClick={handleUpdate}
+                    >수정</Button>{' '}
+                    <Button
+                        variant="outline-primary"
+                        size="sm"
+                        onClick={() => router.push("/admin")}
+                    >목록</Button>{' '}
+                </Col>
+                <Col sm={2}></Col>
+            </Row>
+        </Container>
     )
 }

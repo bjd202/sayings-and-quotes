@@ -3,6 +3,7 @@
 import { useAuth } from "@/app/AuthContext"
 import { useParams, useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
+import { Button, Col, Container, Row, Table } from "react-bootstrap"
 
 export default function CreateRequestDetail(){
     const params = useParams()
@@ -74,24 +75,42 @@ export default function CreateRequestDetail(){
     }
 
     return(
-        <div>
-            <table>
-                <tbody>
-                    <tr>
-                        <th>분류</th>
-                        <td>{category}</td>
-                    </tr>
-                    <tr>
-                        <th>내용</th>
-                        <td>{content}</td>
-                    </tr>
-                </tbody>
-            </table>
+        <Container fluid>
+            <Row style={{marginTop: 200}}>
+                <Col sm={2}></Col>
+                <Col>
+                    <Table>
+                        <tbody>
+                            <tr>
+                                <th>분류</th>
+                                <td>{category}</td>
+                            </tr>
+                            <tr>
+                                <th>내용</th>
+                                <td>{content}</td>
+                            </tr>
+                        </tbody>
+                    </Table>
+                </Col>
+                <Col sm={2}></Col>
+            </Row>
 
-            <div>
-                <button onClick={handleCreate}>등록</button>
-                <button onClick={() => router.push("/admin")}>목록</button>
-            </div>
-        </div>
+            <Row>
+                <Col sm={2}></Col>
+                <Col>
+                    <Button
+                        variant="outline-primary"
+                        size="sm"
+                        onClick={handleCreate}
+                    >등록</Button>{' '}
+                    <Button
+                        variant="outline-primary"
+                        size="sm"
+                        onClick={() => router.push("/admin")}
+                    >목록</Button>{' '}
+                </Col>
+                <Col sm={2}></Col>
+            </Row>
+        </Container>
     )
 }

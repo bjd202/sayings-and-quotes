@@ -3,6 +3,8 @@
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useAuth } from "../AuthContext"
+import { Button, Col, Container, Row, Table } from "react-bootstrap"
+import Paging from "../components/Paging"
 
 export default function Admin(){
     const router = useRouter()
@@ -11,6 +13,19 @@ export default function Admin(){
     const [updateRequestData, setUpdateRequestData] = useState([])
 
     const { loggedIn } = useAuth()
+
+    const itemsPerPage = 5; // 한 페이지에 표시할 아이템 개수
+    const [currentPage1, setCurrentPage1] = useState(1); // 현재 페이지
+    const indexOfLastItem1 = currentPage1 * itemsPerPage; // 마지막
+    const indexOfFirstItem1 = indexOfLastItem1 - itemsPerPage; // 첫번째
+    const currentItems1 = createRequestData.slice(indexOfFirstItem1, indexOfLastItem1);
+    const totalPages1 = Math.ceil(createRequestData.length / itemsPerPage); // 전체 페이지
+
+    const [currentPage2, setCurrentPage2] = useState(1); // 현재 페이지
+    const indexOfLastItem2 = currentPage2 * itemsPerPage; // 마지막
+    const indexOfFirstItem2 = indexOfLastItem2 - itemsPerPage; // 첫번째
+    const currentItems2 = updateRequestData.slice(indexOfFirstItem2, indexOfLastItem2);
+    const totalPages2 = Math.ceil(updateRequestData.length / itemsPerPage); // 전체 페이지
 
     useEffect(() => {
       console.log(loggedIn);
@@ -185,82 +200,126 @@ export default function Admin(){
     }
 
     return(
-        <div>
-            <h2>관리자 페이지</h2>
-            
-            <div>
-                <button onClick={() => router.push("/")}>유저 페이지</button>
-            </div>
+        <Container fluid>
+            <Row>
+                <Row style={{marginTop: 20}}>
+                    <Col style={{textAlign: "right"}}>
+                        <Button
+                            variant="outline-primary"
+                            size="sm"
+                            onClick={() => router.push("/")}
+                        >유저 페이지</Button>
+                    </Col>
+                </Row>
 
-            <div style={{display: "flex"}}>
-                <div>
-                    <table>
-                        <caption>등록 요청</caption>
-                        <thead>
-                            <tr>
-                                <th>번호</th>
-                                <th>분류</th>
-                                <th>내용</th>
-                                <th>작성자</th>
-                                <th>-</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                createRequestData.length > 0 ?
-                                createRequestData.map((d) => {
-                                    return(
-                                        <tr key={d.id} onClick={() => handleCreateRequestDetail(d.id)} style={{cursor: "pointer"}}>
-                                            <td>{d.id}</td>
-                                            <td>{d.category}</td>
-                                            <td>{d.content}</td>
-                                            <td>{d.username}</td>
-                                            <td>
-                                                <button onClick={(e) => handleCreate(e, d)}>등록</button>
-                                                <button onClick={(e) => handleCreateRequestDelete(e, d.id)}>삭제</button>
-                                            </td>
-                                        </tr>
-                                    )
-                                }) : <tr><td colSpan={5}>데이터가 없습니다.</td></tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
+                <Row style={{marginTop: 20}}>
+                    <Col style={{textAlign: "center"}}>
+                        <h2>관리자 페이지</h2>
+                    </Col>
+                </Row>
 
-                <div>
-                    <table>
-                        <caption>수정 요청</caption>
-                        <thead>
-                            <tr>
-                                <th>번호</th>
-                                <th>분류</th>
-                                <th>내용</th>
-                                <th>작성자</th>
-                                <th>-</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                updateRequestData.length > 0 ?
-                                updateRequestData.map((d) => {
-                                    return(
-                                        <tr key={d.id} onClick={() => handleUpdateRequestDetail(d.id)} style={{cursor: "pointer"}}>
-                                            <td>{d.id}</td>
-                                            <td>{d.category}</td>
-                                            <td>{d.content}</td>
-                                            <td>{d.username}</td>
-                                            <td>
-                                                <button onClick={(e) => handleUpdate(e, d)}>수정</button>
-                                                <button onClick={(e) => handleUpdateRequestDelete(e, d.id)}>삭제</button>
-                                            </td>
-                                        </tr>
-                                    )
-                                }) : <tr><td colSpan={5}>데이터가 없습니다.</td></tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+                <Row style={{marginTop: 50}}>
+                    <Col sm={6}>
+                        <h3>등록 요청</h3>
+                        <Table striped bordered hover size="sm">
+                            <thead>
+                                <tr style={{textAlign: "center"}}>
+                                    <th>번호</th>
+                                    <th>분류</th>
+                                    <th>내용</th>
+                                    <th>작성자</th>
+                                    <th>-</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    currentItems1.length > 0 ?
+                                    currentItems1.map((d) => {
+                                        return(
+                                            <tr key={d.id} onClick={() => handleCreateRequestDetail(d.id)} style={{cursor: "pointer"}}>
+                                                <td width={50} style={{textAlign: "center"}}>{d.id}</td>
+                                                <td width={150} style={{textAlign: "center"}}>{d.category}</td>
+                                                <td>{d.content}</td>
+                                                <td width={150} style={{textAlign: "center"}}>{d.username}</td>
+                                                <td width={150} style={{textAlign: "center"}}>
+                                                    <Button 
+                                                        variant="outline-primary"
+                                                        size="sm"
+                                                        onClick={(e) => handleCreate(e, d)}
+                                                    >등록</Button>{' '}
+                                                    <Button 
+                                                        variant="outline-primary"
+                                                        size="sm"
+                                                        onClick={(e) => handleCreateRequestDelete(e, d.id)}
+                                                    >삭제</Button>
+                                                </td>
+                                            </tr>
+                                        )
+                                    }) : <tr style={{textAlign: "center"}}><td colSpan={5}>데이터가 없습니다.</td></tr>
+                                }
+                            </tbody>
+                        </Table>
+                        
+                        <Col style={{display: "flex", justifyContent: 'center'}}>
+                            <Paging 
+                                totalPages={totalPages1}
+                                currentPage={currentPage1}
+                                onPageChange={setCurrentPage1}
+                            />
+                        </Col>
+                    </Col>
+                    
+                    <Col sm={6}>
+                        <h3>수정 요청</h3>
+                        <Table striped bordered hover size="sm">
+                            <thead>
+                                <tr style={{textAlign: "center"}}>
+                                    <th>번호</th>
+                                    <th>분류</th>
+                                    <th>내용</th>
+                                    <th>작성자</th>
+                                    <th>-</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    updateRequestData.length > 0 ?
+                                    updateRequestData.map((d) => {
+                                        return(
+                                            <tr key={d.id} onClick={() => handleUpdateRequestDetail(d.id)} style={{cursor: "pointer"}}>
+                                                <td width={50} style={{textAlign: "center"}}>{d.id}</td>
+                                                <td width={150} style={{textAlign: "center"}}>{d.category}</td>
+                                                <td>{d.content}</td>
+                                                <td width={150} style={{textAlign: "center"}}>{d.username}</td>
+                                                <td width={150} style={{textAlign: "center"}}>
+                                                    <Button 
+                                                        variant="outline-primary"
+                                                        size="sm"
+                                                        onClick={(e) => handleUpdate(e, d)}
+                                                    >수정</Button>{' '}
+                                                    <Button
+                                                        variant="outline-primary"
+                                                        size="sm"
+                                                        onClick={(e) => handleUpdateRequestDelete(e, d.id)}
+                                                    >삭제</Button>
+                                                </td>
+                                            </tr>
+                                        )
+                                    }) : <tr style={{textAlign: "center"}}><td colSpan={5}>데이터가 없습니다.</td></tr>
+                                }
+                            </tbody>
+                        </Table>
+
+                        <Col style={{display: "flex", justifyContent: 'center'}}>
+                            <Paging 
+                                totalPages={totalPages2}
+                                currentPage={currentPage2}
+                                onPageChange={setCurrentPage2}
+                            />
+                        </Col>
+                    </Col>
+                </Row>
+            </Row>
+        </Container>
     )
 }
