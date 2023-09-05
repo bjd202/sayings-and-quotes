@@ -10,6 +10,7 @@ json-server --watch .\db.json --port 3001
 
 next.js
 ```bash
+npm install
 npm run dev
 ```
 
